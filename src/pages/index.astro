@@ -8,46 +8,14 @@ const MAX_POSTS = 10;
 const allPosts = await getAllPosts();
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
-const cactusTech: Array<{ title: string; desc: string; href: string }> = [
+const myToolBox: Array<{ title: string; desc: string }> = [
 	{
-		title: "Astro",
-		desc: "Build fast websites, faster.",
-		href: "https://astro.build",
+		title: "Frontend",
+		desc: "My canvas is built with TypeScript and adorned with the artistry of React, bringing interactive and dynamic web experiences to life.",
 	},
 	{
-		title: "Astro Assets",
-		desc: "Built-in optimized asset support.",
-		href: "https://docs.astro.build/en/guides/assets/",
-	},
-	{
-		title: "Tailwind CSS",
-		desc: "Rapidly build modern websites without ever leaving your HTML.",
-		href: "https://tailwindcss.com",
-	},
-	{
-		title: "Markdown",
-		desc: "Simple and easy-to-use markup language.",
-		href: "https://www.markdownguide.org/",
-	},
-	{
-		title: "MDX",
-		desc: "Markdown for the component era.",
-		href: "https://mdxjs.com/",
-	},
-	{
-		title: "Satori",
-		desc: "Generating png Open Graph images for blog posts.",
-		href: "https://github.com/vercel/satori",
-	},
-	{
-		title: "Pagefind",
-		desc: "A fully static search library.",
-		href: "https://pagefind.app/",
-	},
-	{
-		title: "Astro Icon",
-		desc: "An easy to use Icon component for Astro.",
-		href: "https://github.com/natemoo-re/astro-icon#readme",
+		title: "Backend",
+		desc: "I wield the power of Golang to craft robust and scalable services that fuel the overall web experiences.",
 	},
 ];
 ---
@@ -59,6 +27,9 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 			Hi, I'm a Software Engineer based in Bangkok. I love to learn new stuffs and build things.
 			Join me in sculpting the future of technology - where curiosity and code meet to craft the
 			extraordinary.
+		</p>
+		<p class="mb-4">
+			When I'm not coding, you can find me playing games, brewing a coffee, or reading books.
 		</p>
 		<SocialList />
 	</section>
@@ -75,20 +46,14 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 		</ul>
 	</section>
 	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">Technologies</h2>
+		<h2 class="title mb-4 text-xl">My Toolbox</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			{
-				cactusTech.map(({ href, title, desc }) => (
+				myToolBox.map(({ title, desc }) => (
 					<li>
-						<a
-							href={href}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="cactus-link inline-block"
-						>
-							{title}
-						</a>
-						:<p class="inline-block sm:mt-2">{desc}</p>
+						<p class="inline-block sm:mt-2">
+							<span class="font-semibold">{title}:</span> {desc}
+						</p>
 					</li>
 				))
 			}
