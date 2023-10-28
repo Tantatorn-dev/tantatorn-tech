@@ -1,0 +1,48 @@
+---
+const workExperiences: Array<{
+	time: string;
+  title: string;
+  company: string;
+  description: string;
+}> = [
+	{
+    time: 'Jun 2021 - Dec 2021',
+    title:  'Research Assistant Intern',
+    company: 'CMKL University',
+    description: `During my internship, I had the opportunity to contribute to
+    a comprehensive machine learning project centered around the application
+    of Deep Learning for the classification of bottles within a recycling facility.`
+	},
+	{
+    time: 'Dec 2021 - Present',
+    title:  'Software Engineer',
+    company: 'Certu Systems',
+    description: `As a Software Engineer at a forward-thinking logistics startup,
+          I have played a pivotal role in developing cutting-edge solutions using a modern and versatile tech stack.
+          My technical expertise in Next.js, Golang, GraphQL, and agile methodologies is instrumental
+          in ensuring the success of our projects and the delivery of high-quality software solutions.`
+	},
+];
+---
+
+<ol class="relative border-l border-gray-200 dark:border-gray-700">
+ {workExperiences.map((i) => (
+	<li class="mb-10 ml-4">
+		<div
+			class="absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-200 dark:border-gray-900 dark:bg-gray-700"
+		>
+		</div>
+		<time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
+			>{i.time}</time>
+		<h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+      {i.title}
+		</h3>
+		<h3 class="text-md font-normal text-gray-800 dark:text-white">
+      {i.company}
+		</h3>
+		<p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+      {i.description}
+		</p>
+	</li>
+ ))}
+</ol>
