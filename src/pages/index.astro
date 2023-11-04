@@ -2,6 +2,7 @@
 import PageLayout from "@/layouts/Base";
 import PostPreview from "@/components/blog/PostPreview";
 import SocialList from "@/components/SocialList";
+import HelloWorld from "../components/misc/HelloWorld";
 import { getAllPosts, sortMDByDate } from "@/utils";
 
 const MAX_POSTS = 10;
@@ -22,7 +23,7 @@ const myToolBox: Array<{ title: string; desc: string }> = [
 
 <PageLayout meta={{ title: "Home" }}>
 	<section>
-		<h1 class="title mb-6">Hello World!</h1>
+    <HelloWorld />
 		<p class="mb-4">
 			Hi, I'm a Software Engineer based in Bangkok. I love to learn new stuffs and build things.
 			Join me in sculpting the future of technology - where curiosity and code meet to craft the
