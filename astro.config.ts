@@ -7,13 +7,19 @@ import prefetch from "@astrojs/prefetch";
 import remarkUnwrapImages from "remark-unwrap-images";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
 
+import react from "@astrojs/react";
+
 // https://astro.build/config
 export default defineConfig({
 	// ! Please remember to replace the following site property with your own domain
 	site: "https://astro-cactus.chriswilliams.dev/",
 	markdown: {
 		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
-		remarkRehype: { footnoteLabelProperties: { className: [""] } },
+		remarkRehype: {
+			footnoteLabelProperties: {
+				className: [""],
+			},
+		},
 		shikiConfig: {
 			theme: "dracula",
 			wrap: true,
@@ -30,6 +36,7 @@ export default defineConfig({
 		}),
 		sitemap(),
 		prefetch(),
+		react(),
 	],
 	vite: {
 		plugins: [rawFonts([".ttf"])],
@@ -38,7 +45,6 @@ export default defineConfig({
 		},
 	},
 });
-
 function rawFonts(ext: Array<string>) {
 	return {
 		name: "vite-plugin-raw-fonts",
