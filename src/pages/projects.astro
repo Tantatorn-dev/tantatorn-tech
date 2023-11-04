@@ -1,0 +1,37 @@
+---
+import PageLayout from "@/layouts/Base";
+import ProjectCard from "@/components/project/ProjectCard";
+
+const meta = {
+	title: "Projects",
+	description: "A list of projects I have worked on.",
+};
+
+const projects = [
+	{
+		title: "CE Boostup 7th Grader Website",
+		description:
+			"This project serves as a programming exercise platform designed for incoming CE KMITL freshmen.",
+	},
+	{
+		title: "NFT4X",
+		description: `A dApp 💻 for making an existed NFT collection become redeemable token" for anything from hoodie merchandise to tungsten cube. This project is a submission for Ethglobal's NFTHACK 2022.`,
+	},
+	{
+		title: "Maingam Tiles Website",
+		description: "A website of the famous tiles manufacturer in Chiangmai, Thailand.",
+	},
+];
+---
+
+<PageLayout meta={meta}>
+	<h1 class="title mb-6">Projects</h1>
+	<p class="mb-5">A list of cool projects I have participated on.</p>
+	<div class="mt-6 grid gap-4 sm:grid-cols-1 md:grid-cols-2">
+		{
+			projects.map((project) => (
+				<ProjectCard title={project.title} description={project.description} />
+			))
+		}
+	</div>
+</PageLayout>
