@@ -13,22 +13,24 @@ const meta = {
 
 <PageLayout meta={meta}>
 	<div class="space-y-6">
-		<h1 class="title">About me</h1>
-		<p>
-			Hi, I'm a Software Engineer based in Bangkok. I love to learn new stuffs and build things.
-			Join me in sculpting the future of technology - where curiosity and code meet to craft the
-			extraordinary.
-		</p>
-		<div class="flex justify-center">
+		<div class="flex flex-row gap-x-10">
 			<Image
 				src={aboutImg}
 				alt="Tantatorn Suksangwarn"
 				loading="eager"
 				fetchpriority="high"
-				class="h-auto w-72"
+				class="h-56 w-56 rounded-full object-contain"
 			/>
+			<div class="flex flex-col gap-y-4">
+				<h1 class="title">About me</h1>
+				<p>
+					Hi, I'm a Software Engineer based in Bangkok. I love to learn new stuffs and build things.
+					Join me in sculpting the future of technology - where curiosity and code meet to craft the
+					extraordinary. I enjoy building things with React, NextJS, and Golang.
+				</p>
+			</div>
 		</div>
-		<h2 class="title">Work Experience</h2>
+		<h2 class="title mt-6">Work Experience</h2>
 		<Experience />
 	</div>
 </PageLayout>
