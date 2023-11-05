@@ -1,0 +1,157 @@
+---
+title: "About this blog"
+publishDate: "4 Nov 2023"
+description: "Hello. I don't know what to write for my first blog. Let's write about how I make this blog."
+tags: ["frontend", "astro"]
+---
+
+Hello fellas. I don't know to what to write for my first blog. Well then, let's write about how I make this blog.
+I intend to use this blog to convey my thoughts on various topics I'm interested in. I did have a blog before, but it's
+on a platform like Medium. I don't like the idea of having my content on a platform I don't own. So, I decided to make
+my own blog.
+
+## Toolbox
+
+Let's talk about the main tool I use to make this site. I've just heard about Astro lately. There is an increasing adoption
+of Astro for content-focused website, especially for blog. I suppose this is my turn to give it a try.
+
+In this blog I'll share my experience using Astro to supercharge this blog. I love the philosophy of Astro. It's a framework that compiles your
+site to static HTML, CSS, and JS. It's fast, secure, and SEO-friendly. It's also framework agnostic. You can use any framework
+you want. You can have a React component, Vue component residing in the same page. It's also shipped with a lot of themes
+to get you started. I'm using [Astro Cactus](https://github.com/chrismwilliams/astro-theme-cactus).
+
+Before we dive in, let me tell you a little bit about Astro Islands. This is a pattern that originated from
+Astro. Let's view each components in a page as an island. Highly interactive components is like an island in the midst
+of the sea of static html. It's a great way to improve your site performance drastically. You can read more about it. [Here](https://docs.astro.build/en/concepts/islands/)
+
+## Getting started
+
+Let's get started. First, you need to install Astro (template is optional). You can install it using npm or yarn.
+
+```bash
+npm create astro@latest -- --template <github-username>/<github-repo>
+```
+
+For VSCode user like me, you can install the Astro extension. [Find it here](https://marketplace.visualstudio.com/items?itemName=astro-build.astro-vscode)
+
+## Astro component
+
+Astro component is a HTML-only templating component with no client-side runtime. Its file extension is `.astro`.
+Most of your components in Astro will be Astro component.
+
+Astro components consist of 2 part.
+
+1. Component Script
+2. Template
+
+Let me show you an example.
+
+```astro
+---
+// Component Script
+import MyComponent from "@/components/MyComponent";
+---
+
+<div>
+	<MyComponent />
+</div>
+```
+
+The component script is runned at server side. It's where you can import your component, data, or any other logic.
+The template is the HTML part of the component. It's where you can write your HTML.
+
+### Pass props to component
+
+You can pass props to component like this.
+
+```astro
+---
+// Pokemon.astro
+const { pokemon } = Astro.props;
+---
+
+<h1>{pokemon}</h1>
+```
+
+```astro
+---
+// Pokemon component usage
+---
+
+<Pokemon pokemon="Pikachu" />
+```
+
+### Slot
+
+In Astro, there is a slot too like existing in Svelte. You can use it like this.
+
+```astro
+---
+// Wrapper.astro
+---
+
+<div id="wrapper">
+	<slot />
+</div>
+```
+
+```astro
+---
+// usage of Wrapper component
+---
+
+<Wrapper>
+	<h1>Hello World</h1>
+</Wrapper>
+```
+
+## Add React component
+
+Let's say you've already have all static stuffs in your site. It's time to add some interactivity to your site.
+You can add React component to your Astro site. Astro itself is also supports other framework like Vue, Svelte, etc.
+You can view the list of supported framework [here](https://docs.astro.build/en/guides/integrations-guide/).
+
+Let's add a React component to our site. First, we need to install React. Integration with React is pretty straightforward.
+You can run this command to install React.
+
+```bash
+npx astro add react
+```
+
+After that, you can add React component to your Astro site. Let's say you have a React component called `Counter`.
+
+```jsx
+// Counter.jsx
+export default function Counter() {
+	const [count, setCount] = useState(0);
+
+	return (
+		<div>
+			<button onClick={() => setCount(count + 1)}>add</button>
+			<h1>Count: {count}</h1>
+		</div>
+	);
+}
+```
+
+You can import it to your Astro component like this.
+
+```astro
+---
+// Counter.astro
+import Counter from "@/components/Counter.jsx";
+---
+
+<div>
+	<Counter client:only />
+</div>
+```
+
+Disclaimer: You need to add `client:only` to your component if you use a hook like `useState` or `useEffect`. It's because
+those hooks are not supported in server side.
+
+## Summary
+
+That's all for now. I believe this is enough to get you started with Astro.
+I'd love to see everyone do more blogging stuffs (including me). Blogging is a great way to
+improve my understanding of a topic. See you in the next blog.
