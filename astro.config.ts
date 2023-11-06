@@ -25,10 +25,6 @@ export default defineConfig({
 			wrap: true,
 		},
 	},
-	experimental: {
-		viewTransitions: true,
-		assets: true,
-	},
 	integrations: [
 		mdx({}),
 		tailwind({
