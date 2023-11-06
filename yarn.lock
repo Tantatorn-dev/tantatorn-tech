@@ -132,7 +132,7 @@
 
 "@astrojs/react@^3.0.4":
   version "3.0.4"
-  resolved "https://registry.npmjs.org/@astrojs/react/-/react-3.0.4.tgz"
+  resolved "https://registry.yarnpkg.com/@astrojs/react/-/react-3.0.4.tgz#5170ef51c720b6e7851b426681992c3d55e5b580"
   integrity sha512-v+qltrm5nfqqm8C5ymYDBxrGlvNouRr+iCLcUWvNX65abVz8GzUqquhPQjmCTDXphn1Qc558Uxzc4s79l02skw==
   dependencies:
     "@vitejs/plugin-react" "^4.0.4"
