@@ -12,7 +12,7 @@ import react from "@astrojs/react";
 // https://astro.build/config
 export default defineConfig({
 	// ! Please remember to replace the following site property with your own domain
-	site: "https://astro-cactus.chriswilliams.dev/",
+	site: "https://tantatorn.xyz/",
 	markdown: {
 		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
 		remarkRehype: {
