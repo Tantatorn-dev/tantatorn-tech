@@ -6,6 +6,7 @@ import sitemap from "@astrojs/sitemap";
 import prefetch from "@astrojs/prefetch";
 import remarkUnwrapImages from "remark-unwrap-images";
 import { remarkReadingTime } from "./src/utils/remark-reading-time";
+import partytown from "@astrojs/partytown";
 
 import react from "@astrojs/react";
 
@@ -33,6 +34,11 @@ export default defineConfig({
 		sitemap(),
 		prefetch(),
 		react(),
+		partytown({
+			config: {
+				forward: ["dataLayer.push"],
+			},
+		}),
 	],
 	vite: {
 		plugins: [rawFonts([".ttf"])],
