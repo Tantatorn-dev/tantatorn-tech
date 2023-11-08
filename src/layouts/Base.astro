@@ -22,12 +22,27 @@ const {
 	<head>
 		<BaseHead title={title} description={description} ogImage={ogImage} articleDate={articleDate} />
 		{
-			/* 
+			/*
 			Fallback set to none in non-supporting browsers -> https://docs.astro.build/en/guides/view-transitions/#fallback-control
-			This is set to false by default in src/site.config.ts 
+			This is set to false by default in src/site.config.ts
 			*/
 		}
 		{siteConfig.includeViewTransitions && <ViewTransitions fallback="none" />}
+
+		<!-- Google tag (gtag.js) -->
+		<script
+			type="text/partytown"
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-YPH9ETR6CP"></script>
+		<script type="text/partytown">
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments); // eslint-disable-line
+			}
+			gtag("js", new Date());
+
+			gtag("config", "G-YPH9ETR6CP");
+		</script>
 	</head>
 	<body>
 		<ThemeProvider />
