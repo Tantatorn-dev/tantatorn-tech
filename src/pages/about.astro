@@ -13,13 +13,13 @@ const meta = {
 
 <PageLayout meta={meta}>
 	<div class="space-y-6">
-		<div class="flex flex-row gap-x-10">
+		<div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
 			<Image
 				src={aboutImg}
 				alt="Tantatorn Suksangwarn"
 				loading="eager"
 				fetchpriority="high"
-				class="h-56 w-56 rounded-full object-contain"
+				class="ml-auto mr-auto h-56 w-56 rounded-full object-contain"
 			/>
 			<div class="flex flex-col gap-y-4">
 				<h1 class="title">About me</h1>
