@@ -25,7 +25,7 @@ export default function HelloWorld() {
 	}, []);
 
 	return (
-		<h1 className="mb-6 text-xl text-accent">
+		<h1 className="mb-6 text-accent md:text-xl">
 			<span ref={el} />
 		</h1>
 	);
