@@ -27,7 +27,8 @@
 		"satori": "0.10.9",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.32.6",
-		"typed.js": "^2.0.16"
+		"typed.js": "^2.0.16",
+		"wordcut": "^0.9.1"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.3.1",
