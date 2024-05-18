@@ -8,6 +8,7 @@ import { getAllPosts, getFormattedDate } from "@/utils";
 
 import RobotoMono from "@/assets/roboto-mono-regular.ttf";
 import RobotoMonoBold from "@/assets/roboto-mono-700.ttf";
+import type { ReactNode } from "react";
 
 const ogOptions: SatoriOptions = {
 	width: 1200,
@@ -59,7 +60,7 @@ export async function GET({ params: { slug } }: APIContext) {
 			month: "long",
 		},
 	);
-	const svg = await satori(markup(title, postDate), ogOptions);
+	const svg = await satori(markup(title, postDate) as unknown as ReactNode, ogOptions);
 	const png = new Resvg(svg).render().asPng();
 	return new Response(png, {
 		headers: {
