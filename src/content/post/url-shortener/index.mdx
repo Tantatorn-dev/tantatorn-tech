@@ -1,0 +1,108 @@
+---
+title: "URL Shortener using NextJS Server Action"
+publishDate: "8 Jun 2024"
+description: "มาทำเว็บย่อลิงก์แบบง่ายๆ ด้วย server action ของ NextJS กันเถอะ"
+tags: ["frontend", "backend", "nextjs"]
+---
+
+หลังจากที่ NextJS ได้ปล่อย App Router ให้เรามาลองใช้กันใน Next 13 เจ้าตัว App Router ก็ให้ของเล่น
+อย่าง Server Action ให้เราใช้งานได้ ซึ่งการใช้งาน Server Action นี้ทำให้หลายคนคิดถึง PHP ขึ้นมาทันทีเลย
+เกิดเป็นกระแสทำเป็น meme ต่างๆนานามากมาย แต่ใเมื่อมีของให้ใช้เราก็ลองหยิบมันมาเล่นหน่อย
+ในบล๊อกนี้เราจะมาสร้างเว็บย่อลิงก์ (URL Shortener) ด้วย NextJS และ Server Action กัน
+
+## สร้างโปรเจค NextJS
+
+ส่วนนี้ไม่มีอะไร แค่สร้าง project ใหม่ด้วย `create-next-app` ก็เป็นอันเรียบร้อยแล้ว
+
+```bash
+npx create-next-app@latest
+```
+
+เลือกตั้งค่าได้ตามใจชอบ หลักๆขอให้เลือกเป็น App Router นะ ไม่ต้อง Pages Router เราจะได้ใช้ server action ได้
+
+## เตรียม UI
+
+เตียม input UI ให้พร้อมในที่นี้เราจะใช้ Tailwind + DaisyUI ในการปั้น component แบบไวๆ
+
+```tsx
+export default async function Home() {
+  return (
+    <main className="flex min-h-screen flex-col items-center p-24">
+      <h1 className="text-4xl mb-10">URL Shortener</h1>
+      <form className="flex flex-row justify-center w-full gap-5">
+        <input
+          name="url"
+          type="text"
+          placeholder="Type URL here"
+          className="input input-bordered w-full max-w-xl"
+        />
+        <button type="submit" className="btn btn-primary">Shorten</button>
+      </form>
+    </main>
+  );
+}
+```
+
+เป็น UI หน้าตาง่ายๆ ที่มี text input กับปุ่ม Shorten
+
+![Form UI](./ui.png)
+
+## สร้าง Server Action
+
+อย่าลืมติดตั้ง Redis client ให้เรียบร้อยก่อนใช้งานนะ ตัว server ใช้รันจาก Docker เอา
+ครั้งนี้ที่หยิบเอา Redis มาใช้เก็บข้อมูล
+
+ขั้นแรกเราสร้างไฟล์ Typescript ใหม่ขึ้นมาอันนึงตั้งชื่อว่า `actions.ts` แล้วเขียนโค้ดด้านล่างนี้ลงไป
+
+```ts
+"use server";
+
+import { createClient } from "redis";
+import { randomBytes } from "crypto";
+
+export async function shorten(formData: FormData) {
+  const url = formData.get("url");
+
+  if (!url || typeof url !== "string") {
+	throw new Error("Invalid URL");
+  }
+
+  const client = createClient();
+  await client.connect();
+
+  const key = randomBytes(5).toString("hex")
+  await client.set(key, url);
+
+  const value = await client.get(key);
+  console.log('saved url:', value);
+}
+```
+
+โค้ดข้างบนนี้เป็นโค้ดที่ใช้ในการย่อลิงก์ URL โดยการสร้าง key แบบสุ่ม 5 ตัวอักษรแล้วเก็บ URL ลงใน Redis
+เราใช้ `createClient` ในการเชื่อมต่อกับ Redis และใช้ `randomBytes` ในการสร้าง key สุ่ม 5 ตัวอักษร
+
+จากนั้นเราลองไปแก้โค้ด ui นิดนึงให้เรียกใช้ server action ที่เราสร้างขึ้นมา
+
+```tsx
+import { shorten } from "./actions";
+
+export default function Home() {
+  return (
+    <main className="flex min-h-screen flex-col items-center p-24">
+      <h1 className="text-4xl mb-10">URL Shortener</h1>
+      <form action={shorten} className="flex flex-row justify-center w-full gap-5">
+        <input
+          name="url"
+          type="text"
+          placeholder="Type URL here"
+          className="input input-bordered w-full max-w-xl"
+        />
+        <button type="submit" className="btn btn-primary">Shorten</button>
+      </form>
+    </main>
+  );
+}
+```
+
+หลักๆ เราจะสามารถ import function shorten มาใช้บน client side ได้แบบง่ายๆเลย ไม่ต้องทำ API Route แบบ Next เวอร์ชันก่อนๆ
+อย่าลืมใส่ name ให้ text input ด้วย
