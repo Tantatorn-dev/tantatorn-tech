@@ -1,0 +1,153 @@
+---
+title: "มาลองใช้ Typia กัน !"
+publishDate: "16 Jun 2024"
+description: "มาลองใช้ Typia สำหรับ runtime validation กันบน Typescript กันเถอะ"
+tags: ["typescript"]
+---
+
+## Intro
+
+ในบล๊อกนี้เราจะมาลองใช้ [Typia](https://github.com/samchon/typia) สำหรับทำ runtime validation กัน
+ถ้าให้เราพูดสั้นๆ ว่า Typia คืออะไร ? มันก็คือ library สำหรับ validate ตัว object ใน Typescript ซึ่งก็คล้ายๆ library ยอดฮิตอย่าง Zod
+หรือ Class Validator นั่นเอง แต่ก็มีของบางอย่างที่ไม่เหมือนกัน อย่าง Zod ก็จะมี schema เป็นของตนเอง และ Class Validator
+ก็จะใช้ decorator บนแต่ละ field ใน class ส่วน Typia จะใช้แค่ Pure Typescript type เลย เดี๋ยวเราลองมาเทียบตัวอย่างของทั้ง 3 ตัวกันดู
+
+```ts
+// Typia
+type IUser = {
+  id: string & tags.Format<"uuid">;
+  username: string & tags.MinLength<3> & tags.MaxLength<20>;
+  email: string & tags.Format<"email">;
+  age: number & tags.Minimum<18> & tags.Maximum<100>;
+  weight: number & tags.Type<'float'>
+  height: number & tags.Type<'float'>
+};
+```
+
+```ts
+// Zod
+const UserSchema = z.object({
+  id: z.string().uuid(),
+  username: z.string().min(3).max(20),
+  email: z.string().email(),
+  age: z.number().min(18).max(100),
+  weight: z.number().float(),
+  height: z.number().float()
+});
+```
+
+```ts
+// Class Validator
+class User {
+  @IsUUID()
+  id: string;
+
+  @Length(3, 20)
+  username: string;
+
+  @IsEmail()
+  email: string;
+
+  @IsInt()
+  @Min(18)
+  @Max(100)
+  age: number;
+
+  @IsNumber()
+  weight: number;
+
+  @IsNumber()
+  height: number;
+}
+```
+
+สาเหตุที่ Typia ใช้แค่ pure Typescript ในการ define schema ได้ เพราะใช้เทคนิค AoT (Ahead of Time) compilation [อ่านเพิ่ม](https://typia.io/docs/pure/#aot-compilation)
+
+เรามาลองใช้ Typia กันดูเลย
+
+## Getting Started
+
+assume ว่าเรามี Typescript project ถูกสร้างไว้เรียบร้อยแล้ว จากนั้นเราทำการติดตั้ง Typia ได้เลย (ในที่นี้จะใช้ pnpm)
+
+```bash
+pnpm install typia
+pnpm typia setup --manager pnpm
+```
+
+จากนั้นเราสามารถเริ่มใช้ Typia ได้เลย มีฟังก์ชันหลักๆ ที่เราจะใช้ดังนี้
+
+### Assert
+
+มาดูฟังก์ชันตัวแรกกัน นั่นคือ `assert` ซึ่งเป็นฟังก์ชันที่ใช้ในการ validate object ตาม schema ที่เรากำหนดไว้ ถ้า object
+สามารถผ่านการ validate เราก็จะได้ object ที่มี type ตามที่เรากำหนดไว้ แต่ถ้าไม่ผ่านก็จะ throw error (TypeGuardError) ออกมา
+
+```ts
+import * as uuid from "uuid";
+import typia, { tags } from "typia";
+
+type IUser = {
+  id: string & tags.Format<"uuid">;
+  username: string & tags.MinLength<3> & tags.MaxLength<20>;
+  email: string & tags.Format<"email">;
+  age: number & tags.Minimum<18> & tags.Maximum<100>;
+};
+
+const user = typia.assert<IUser>({ id: uuid.v4(), username: "test", email: "test@gmail.com", age: 34 });
+
+console.log(user);
+```
+
+โด้ดข้างบนถ้าเราลองรันดูเราก็จะ log object ผ่าน validation ฉลุยๆ แต่ถ้าเราลองเปลี่ยนค่าใน object ให้ไม่ผ่าน validation
+ลองเปลี่ยนให้ email เป็น string ที่ไม่ใช่ email ดู
+
+
+```ts
+const user = typia.assert<IUser>({ id: uuid.v4(), username: "test", email: "test", age: 34 });
+```
+
+เราก็จะเห็น error ออกมาเหมือนนี้
+
+```
+TypeGuardError: Error on typia.assert(): invalid type on $input.email, expect to be string & Format<"email">
+```
+
+
+### Is
+
+ตัวถัดมาง่าย ๆ `is` แค่คืน boolean `true` ถ้า object ผ่าน validation และ `false` ถ้าไม่ผ่าน
+
+```ts
+typia.is<IUser>({ id: uuid.v4(), username: "test", email: "test@gmail.com", age: 34 }); // true
+```
+
+### Validate
+
+ฟังก์ชัน `validate` จะคืน array ของ error ของหลายๆ field ที่ไม่ผ่าน validation ได้เลย
+
+```ts
+const res = typia.validate<IUser>({ id: uuid.v4(), username: "test", email: "test", age: 12 });
+
+if(!res.success) console.log(res.errors);
+```
+
+เราจะทำให้ email กับ age ไม่ผ่าน validation ดู ก็จะได้ res.success เป็น `false` และ log error ออกมา
+
+```
+[
+  {
+    path: '$input.email',
+    expected: 'string & Format<"email">',
+    value: 'test'
+  },
+  { path: '$input.age', expected: 'number & Minimum<18>', value: 12 }
+]
+```
+
+ก็จะเห็นว่ามี field ไหนที่ไม่ผ่าน validation และเหล่าๆ field ที่ไม่ผ่าน expect อะไรบ้าง
+
+
+## Conclusion
+
+Typia ดูเป็น lib ตัวนึงที่น่าใช้เหมือนกัน และในตัว Github ก็เคลมเรื่องของ performance ไว้โหดพอสมควร แต่ข้อเสียของ Typia คือมีคือเราต้องใช้
+Typescript เท่านั้น อย่าง Zod เรายังใช้กับ JS ได้ ความจริงใน doc ของ Typia ยังมีของเล่นอื่น ๆ อีกที่น่าสนใจ เช่น random ข้อมูลตาม schema เรา
+หรือการนำไปใช้กับ Protobuf ได้ด้วย สามารถศึกษาเพิ่มเติมได้ที่ [documentation](https://typia.io/docs) นะครับ
