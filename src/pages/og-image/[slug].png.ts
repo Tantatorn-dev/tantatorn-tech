@@ -6,8 +6,8 @@ import { Resvg } from "@resvg/resvg-js";
 import { siteConfig } from "@/site-config";
 import { getAllPosts, getFormattedDate } from "@/utils";
 
-import RobotoMono from "@/assets/roboto-mono-regular.ttf";
-import RobotoMonoBold from "@/assets/roboto-mono-700.ttf";
+import Kanit from "@/assets/Kanit-Regular.ttf";
+import KanitBold from "@/assets/Kanit-Bold.ttf";
 import type { ReactNode } from "react";
 
 const ogOptions: SatoriOptions = {
@@ -16,14 +16,14 @@ const ogOptions: SatoriOptions = {
 	// debug: true,
 	fonts: [
 		{
-			name: "Roboto Mono",
-			data: Buffer.from(RobotoMono),
+			name: "Kanit",
+			data: Buffer.from(Kanit),
 			weight: 400,
 			style: "normal",
 		},
 		{
-			name: "Roboto Mono",
-			data: Buffer.from(RobotoMonoBold),
+			name: "Kanit",
+			data: Buffer.from(KanitBold),
 			weight: 700,
 			style: "normal",
 		},
