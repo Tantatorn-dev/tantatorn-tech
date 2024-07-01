@@ -67,8 +67,8 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0(prettier-plugin-astro@0.14.0)(prettier@3.2.4)(typescript@5.3.3)
       '@pagefind/default-ui':
-        specifier: ^1.0.4
-        version: 1.0.4
+        specifier: ^1.1.0
+        version: 1.1.0
       '@resvg/resvg-js':
         specifier: ^2.4.1
         version: 2.6.0
@@ -858,8 +858,8 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@pagefind/default-ui@1.0.4':
-    resolution: {integrity: sha512-edkcaPSKq67C49Vehjo+LQCpT615v4d7JRhfGzFPccePvdklaL+VXrfghN/uIfsdoG+HoLI1PcYy2iFcB9CTkw==}
+  '@pagefind/default-ui@1.1.0':
+    resolution: {integrity: sha512-+XiAJAK++C64nQcD7s3Prdmd5S92lT05fwjOxm0L1jj80jbL+tmvcqkkFnPpoqhnicIPgcAX/Y5W0HRZnBt35w==}
 
   '@pagefind/linux-arm64@1.0.4':
     resolution: {integrity: sha512-jGBrcCzIrMnNxLKVtogaQyajVfTAXM59KlBEwg6vTn8NW4fQ6nuFbbhlG4dTIsaamjEM5e8ZBEAKZfTB/qd9xw==}
@@ -4593,7 +4593,7 @@ snapshots:
   '@pagefind/darwin-x64@1.0.4':
     optional: true
 
-  '@pagefind/default-ui@1.0.4': {}
+  '@pagefind/default-ui@1.1.0': {}
 
   '@pagefind/linux-arm64@1.0.4':
     optional: true
