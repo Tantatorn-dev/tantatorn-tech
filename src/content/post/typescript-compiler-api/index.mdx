@@ -1,0 +1,13 @@
+---
+title: "มาลองเล่น TypeScript Compiler API กัน"
+publishDate: "27 Jul 2024"
+description: "มาลองใช้ TypeScript Compiler API ในการ generate code กัน"
+tags: ["typescript", "compiler", "codegen]
+---
+
+ในชีวิตของการเป็น dev บางครั้งเราอาจจะต้องเขียนโค้ดที่เหมือนกันซ้ำๆ แต่อาจจะมีการเปลี่ยนแค่ field ของข้อมูล ยกตัวอย่างเช่น class พร้อม method
+getter setter ต่างๆ งานพวกนี้ค่อนข้าง labour-intensive มากถ้า project เราใหญ่ แต่เราจะทุ่นแรงจากงานพวกนี้ได้อย่างไร? คำตอบอยู่ที่ codegen
+ยกตัวอย่างการใช้ codegen ในชีวิตจริงคือ [GraphQL Code Generator](https://the-guild.dev/graphql/codegen) ที่เราใช้ในการ generate
+type definition จาก schema.graphql นอกจากนี้ในหลายๆ ภาษายังมีเครื่องมือในการ generate unit test boilerplate ให้เราได้อีกด้วย เป็นต้น
+ใน blog นี้เราจะมาดูการใช้ TypeScript Compiler API ในการทำ codegen แบบง่ายๆกัน
+
