@@ -2,7 +2,7 @@
 title: "มาลองเล่น TypeScript Compiler API กัน"
 publishDate: "27 Jul 2024"
 description: "มาลองใช้ TypeScript Compiler API ในการ generate code กัน"
-tags: ["typescript", "compiler", "codegen]
+tags: ["typescript", "compiler", "codegen"]
 ---
 
 ในชีวิตของการเป็น dev บางครั้งเราอาจจะต้องเขียนโค้ดที่เหมือนกันซ้ำๆ แต่อาจจะมีการเปลี่ยนแค่ field ของข้อมูล ยกตัวอย่างเช่น class พร้อม method
@@ -10,4 +10,210 @@ getter setter ต่างๆ งานพวกนี้ค่อนข้า�
 ยกตัวอย่างการใช้ codegen ในชีวิตจริงคือ [GraphQL Code Generator](https://the-guild.dev/graphql/codegen) ที่เราใช้ในการ generate
 type definition จาก schema.graphql นอกจากนี้ในหลายๆ ภาษายังมีเครื่องมือในการ generate unit test boilerplate ให้เราได้อีกด้วย เป็นต้น
 ใน blog นี้เราจะมาดูการใช้ TypeScript Compiler API ในการทำ codegen แบบง่ายๆกัน
+
+## Our Problem
+
+เรามี interface ที่แสดงข้อมูลของ pet ดังนี้
+
+```typescript
+interface Pet {
+    nickName: string;
+    age: number;
+    weight: number;
+}
+```
+
+ถามว่าเราจะเขียนโค้ดสำหรับแปลง interface ที่ชื่อ Pet อันนี้แปลงไปเป็น class ที่มี method getter setter ที่มีหน้าตาประมาณนี้ได้อย่างไร?
+
+```typescript
+class Pet {
+    private _nickName: string;
+    private _age: number;
+    private _weight: number;
+
+    constructor(nickName: string, age: number, weight: number) {
+        this._nickName = nickName;
+        this._age = age;
+        this._weight = weight;
+    }
+
+    get nickName(): string {
+        return this._nickName;
+    }
+
+    set nickName(nickName: string) {
+        this._nickName = nickName;
+    }
+
+    get age(): number {
+        return this._age;
+    }
+
+    set age(age: number) {
+        this._age = age;
+    }
+
+    get weight(): number {
+        return this._weight;
+    }
+
+    set weight(weight: number) {
+        this._weight = weight;
+    }
+}
+```
+
+## Getting Started
+
+ขอแค่เรามี Typescript ใน project ของเราก็สามารถใช้ TypeScript Compiler API ได้เลย ไม่ต้องติดตั้งอะไรเพิ่มเติม เรามาเริ่มต้นกันเลย
+เพื่อความง่ายเราจะเอาโค้ดของ interface Pet มายัดลง string เลยจะได้ไม่เสียเวลาในการอ่านไฟล์
+
+```typescript
+const srcFileText = 'interface Pet { nickName: string; age: number; weight: number; }';
+```
+
+ทุกภาษาบนโลกล้วนมีสิ่งหนึ่งร่วมกันคือ หนึ่งประโยคจะประกอบไปด้วย ประธาน, กรรม และกริยา แค่เพียงตัวต่อสามชิ้นนี้เราก็สามารถเอามาประกอบกันได้เป็นประโยค
+ที่มีหลากความหมายได้ไม่รู้จบ ในทำนองเดียวกันภาษาโปรแกรมมิ่งทั้งหลายก็มีสิ่งที่เรียกว่า AST (Abstract Syntax Tree) ที่เป็น tree ที่ represent ความสัมพันธ์
+ของ token ต่างๆ ในโค้ด token ในที่นี้ก็คือองค์ประกอบต่างๆ ในโค้ดเช่น ชื่อตัวแปร, ชื่อฟังก์ชัน, ชื่อ class, ค่าตัวแปร, operation และอื่นๆ ที่เราเขียนในโค้ด
+โดยกว่าที่ string จะกลายมาเป็น AST นั้นเราจะใช้ lexer (Lexical Analysis) ในการแปลง string ให้เป็น token และ parser (Syntax Analysis)
+ในการแปลง token ให้เป็น AST
+
+ใน Typescript Compiler API เราจะสามารถใช้ `ts.createSourceFile` ในการสร้าง AST จาก string ได้แบบง่าย ๆ เลย
+
+```typescript
+import * as ts from "typescript";
+
+const srcFileText = 'interface Pet { nickName: string; age: number; weight: number; }';
+
+const srcFile = ts.createSourceFile('src.ts', srcFileText, ts.ScriptTarget.Latest, true);
+```
+
+## Let's Walk Through AST
+
+เรามาชำแหละ AST กันดีกว่าว่ามันจะประกอบด้วยอะไรบ้าง เพื่อความง่ายเราะใช้เว็บ [ts-ast-viewer](https://ts-ast-viewer.com/) ในการดู AST ของโค้ดของเรา
+แปะโค้ดลงไปเราจะเห็น AST ของ interface Pet ของเรา
+
+```
+SourceFile
+  InterfaceDeclaration
+  Identifier
+  PropertySignature
+    Identifier
+    StringKeyword
+  PropertySignature
+    Identifier
+    NumberKeyword
+  PropertySignature
+    Identifier
+    NumberKeyword
+  EndOfFileToken
+```
+
+แล้ว class Pet ของเราละ ? ถ้าลองเอาโค้ดไปแปะลงจะ AST ค่อนข้างจะใหญ่พอสมควรเพราะพวก constructor, getter, setter
+
+ถ้าหากถามว่าใน Typescript Compiler API เราจะ print AST มาดูได้อย่างไร? เราสามารถใช้ recursive function ในการ print AST ได้
+จะได้ผลลัพธ์ที่เหมือนกับที่เราเห็นใน ts-ast-viewer เลย
+
+```typescript
+function traverseNode(node: ts.Node, indent: string = "") {
+    console.log(indent + ts.SyntaxKind[node.kind]);
+    indent += "  ";
+    ts.forEachChild(node, child => traverseNode(child, indent));
+}
+
+traverseNode(srcFile);
+```
+
+เดี๋ยวโค้ดส่วนนี้จะเป็น building block ในการทำ codegen ของเรา
+
+## Transforming AST
+
+ในส่วนนี้ เราจะมาลอง transform syntax tree ของเรากัน อันดับแรกเรามาหาวิธีในการ represent โครงสร้างของ interface Pet ก้อนเพื่อความง่าย
+ในการเอาไปใช้
+
+```typescript
+type TInterfaceField = {
+    name: string;
+    type: ts.KeywordTypeSyntaxKind;;
+};
+
+type TInterface = {
+    name: string;
+    fields: TInterfaceField[];
+}
+```
+
+จากนั้นเราเอาฟังก์ชัน traverse node มาลองพลิกแพลงนิดนึง โดยเราจะไล่แต่ละ child ลงไปเรื่อยๆ และใช้ `ts.isInterfaceDeclaration` ในการเช็คว่า node นั้นเป็น interface หรือไม่
+ถ้าใช่ ก็ push ของลง list
+
+```typescript
+function getInterfaces(node: ts.Node): TInterface[] {
+   const ret: TInterface[] = [];
+
+   node.forEachChild(child => {
+       if (ts.isInterfaceDeclaration(child)) {
+           const interfaceName = child.name.text;
+           ret.push({
+               name: interfaceName,
+               fields: getInterfaceFields(child)
+           } as TInterface);
+       }
+   });
+
+   return ret;
+}
+```
+
+แล้วเรามาเขียนฟังก์ชัน `getInterfaceFields` กัน อันนี้ก็คล้ายๆ กับฟังก์ชันก่อนหน้าเพียงแต่เราไต่ลงเข้ามาใน child ของ node ที่เป็น interface แทน
+ซึ่งเราจะไล่ลงจาก property signature และเอาข้อมูลของ field ออกมา โดย identifer node เป็น `name` และ keyword node เป็น `type`
+
+```typescript
+function getInterfaceFields (node: ts.Node): TInterfaceField[] {
+    const ret: TInterfaceField[] = [];
+
+    node.forEachChild(child => {
+        if (ts.isPropertySignature(child)) {
+            const newField= {} as TInterfaceField;
+            child.forEachChild(grandChild => {
+                if (ts.isIdentifier(grandChild)) {
+                    newField.name = grandChild.text;
+                } else {
+                    newField.type = grandChild.kind as ts.KeywordTypeSyntaxKind;
+                }
+            })
+            ret.push(newField);
+        }
+    });
+
+    return ret;
+}
+```
+
+ถ้าเราลอง log ผลลัพธ์มาดูจะเห็นว่าเราได้ข้อมูลของ interface Pet มาแล้ว
+
+```json
+[
+  {
+    "name": "Pet",
+    "fields": [
+      {
+        "name": "nickName",
+        "type": 154
+      },
+      {
+        "name": "age",
+        "type": 150
+      },
+      {
+        "name": "weight",
+        "type": 150
+      }
+    ]
+  }
+]
+```
+
+154, 150 คือค่าของ `ts.KeywordTypeSyntaxKind` ที่เราใช้เป็น enum ในการ represent type ของ field
+ขั้นตอนที่เหลือคือเอาข้อมูลที่ได้มาไปใช้ในการ generate code ของ Pet class ของเราต่อ
+
 
