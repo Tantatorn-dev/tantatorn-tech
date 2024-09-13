@@ -12,8 +12,8 @@ importers:
         specifier: ^1.1.5
         version: 1.1.5(astro@3.6.4(@types/node@17.0.45)(typescript@5.3.3))
       '@astrojs/partytown':
-        specifier: ^2.1.0
-        version: 2.1.0
+        specifier: ^2.1.2
+        version: 2.1.2
       '@astrojs/prefetch':
         specifier: ^0.4.1
         version: 0.4.1
@@ -206,8 +206,8 @@ packages:
     peerDependencies:
       astro: ^3.0.0
 
-  '@astrojs/partytown@2.1.0':
-    resolution: {integrity: sha512-9fjvTx2hTQpirUh1HnZZtFQaBz2R5ixrrmU/Zam3VZ9CoR3frqtnqg/Dt/i5C3UAlwiN0i8VuKxPx5cHP8yY5A==}
+  '@astrojs/partytown@2.1.2':
+    resolution: {integrity: sha512-1a9T5lqxtnrw0qLPo1KwliUvaaUzPNPtWucD8VxdwT7zqcpODFk1RzGgAgqVo+YhutFrTu/qclbtnOfXBuskjw==}
 
   '@astrojs/prefetch@0.4.1':
     resolution: {integrity: sha512-bpC875BqeIuWVgqhi4X814ftzzbKocaLkiZczaj8k5J2SRpueIGkww3XmD+yY/Ekkm9j30aS3neVO6wSm4IJNA==}
@@ -4196,7 +4196,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/partytown@2.1.0':
+  '@astrojs/partytown@2.1.2':
     dependencies:
       '@builder.io/partytown': 0.10.2
       mrmime: 2.0.0
