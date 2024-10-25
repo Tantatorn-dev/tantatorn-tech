@@ -7,6 +7,7 @@ import prefetch from "@astrojs/prefetch";
 import remarkUnwrapImages from "remark-unwrap-images";
 import {remarkReadingTime} from "./src/utils/remark-reading-time";
 import partytown from "@astrojs/partytown";
+import icon from "astro-icon";
 
 import react from "@astrojs/react";
 
@@ -34,6 +35,7 @@ export default defineConfig({
 		sitemap(),
 		prefetch(),
 		react(),
+    icon(),
 		partytown({
 			config: {
 				forward: ["dataLayer.push"],
@@ -42,11 +44,6 @@ export default defineConfig({
 	],
 	vite: {
 		plugins: [rawFonts([".ttf"])],
-    build: {
-      rollupOptions: {
-        external: ["virtual:astro-icon"]
-      }
-    },
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
 		},
