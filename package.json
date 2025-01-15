@@ -17,7 +17,7 @@
 		"@astrojs/react": "^3.6.2",
 		"@astrojs/rss": "^4.0.7",
 		"@astrojs/sitemap": "^3.1.4",
-		"@astrojs/tailwind": "^5.0.1",
+		"@astrojs/tailwind": "^5.1.4",
 		"@iconify-json/mdi": "^1.2.1",
 		"@iconify/json": "^2.2.295",
 		"@types/react": "^18.3.5",
