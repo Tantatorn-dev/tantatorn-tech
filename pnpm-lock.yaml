@@ -12,8 +12,8 @@ importers:
         specifier: ^1.1.5
         version: 1.1.5(astro@4.16.18(@types/node@22.14.0)(rollup@4.38.0)(typescript@5.3.3))
       '@astrojs/partytown':
-        specifier: ^2.1.3
-        version: 2.1.3
+        specifier: ^2.1.4
+        version: 2.1.4
       '@astrojs/prefetch':
         specifier: ^0.4.1
         version: 0.4.1
@@ -228,8 +228,8 @@ packages:
     peerDependencies:
       astro: ^3.0.0
 
-  '@astrojs/partytown@2.1.3':
-    resolution: {integrity: sha512-pkGsV6/GUTph4oLgvrpbrGnu4+9JuG8fOCzBCI2dQKtpBYQ6XAZKHrPA3evQoB5vDbfUZGVCoWe95MnSoPbVtQ==}
+  '@astrojs/partytown@2.1.4':
+    resolution: {integrity: sha512-loUrAu0cGYFDC6dHVRiomdsBJ41VjDYXPA+B3Br51V5hENFgDSOLju86OIj1TvBACcsB22UQV7BlppODDG5gig==}
 
   '@astrojs/prefetch@0.4.1':
     resolution: {integrity: sha512-bpC875BqeIuWVgqhi4X814ftzzbKocaLkiZczaj8k5J2SRpueIGkww3XmD+yY/Ekkm9j30aS3neVO6wSm4IJNA==}
@@ -2035,8 +2035,8 @@ packages:
   domutils@3.2.2:
     resolution: {integrity: sha512-6kZKyUajlDuqlHKVX1w7gyslj9MPIXzIFiz/rGu35uC1wMi+kMhQwGhl4lt9unC9Vb9INnY9Z3/ZA3+FhASLaw==}
 
-  dotenv@16.4.7:
-    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+  dotenv@16.5.0:
+    resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
     engines: {node: '>=12'}
 
   dset@3.1.4:
@@ -3359,6 +3359,10 @@ packages:
 
   mrmime@2.0.0:
     resolution: {integrity: sha512-eu38+hdgojoyq63s+yTpN4XMBdt5l8HhMhc4VKLO9KM5caLIBvUm4thi7fFaxyTmCKeNnXZ5pAlBwCUnhA09uw==}
+    engines: {node: '>=10'}
+
+  mrmime@2.0.1:
+    resolution: {integrity: sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ==}
     engines: {node: '>=10'}
 
   ms@2.1.2:
@@ -4874,10 +4878,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/partytown@2.1.3':
+  '@astrojs/partytown@2.1.4':
     dependencies:
       '@qwik.dev/partytown': 0.11.0
-      mrmime: 2.0.0
+      mrmime: 2.0.1
 
   '@astrojs/prefetch@0.4.1':
     dependencies:
@@ -5589,7 +5593,7 @@ snapshots:
 
   '@qwik.dev/partytown@0.11.0':
     dependencies:
-      dotenv: 16.4.7
+      dotenv: 16.5.0
 
   '@resvg/resvg-js-android-arm-eabi@2.6.0':
     optional: true
@@ -6743,7 +6747,7 @@ snapshots:
       domelementtype: 2.3.0
       domhandler: 5.0.3
 
-  dotenv@16.4.7: {}
+  dotenv@16.5.0: {}
 
   dset@3.1.4: {}
 
@@ -8747,6 +8751,8 @@ snapshots:
   mri@1.2.0: {}
 
   mrmime@2.0.0: {}
+
+  mrmime@2.0.1: {}
 
   ms@2.1.2: {}
 
