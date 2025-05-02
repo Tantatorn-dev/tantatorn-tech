@@ -28,7 +28,7 @@
 		"react-dom": "^18.3.1",
 		"satori": "0.12.2",
 		"satori-html": "^0.3.2",
-		"sharp": "^0.33.5",
+		"sharp": "^0.34.1",
 		"typed.js": "^2.0.16",
 		"wordcut": "^0.9.1"
 	},
