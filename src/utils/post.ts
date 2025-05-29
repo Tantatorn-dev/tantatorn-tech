@@ -1,8 +1,18 @@
-import type { CollectionEntry } from "astro:content";
-import { getCollection } from "astro:content";
+import type {CollectionEntry} from "astro:content";
+
+let getCollection: typeof import("astro:content").getCollection | undefined;
+
+if (import.meta.env.SSR) {
+  const astroContent = await import("astro:content");
+  getCollection = astroContent.getCollection;
+}
 
 /** Note: this function filters out draft posts based on the environment */
 export async function getAllPosts() {
+  if (!getCollection) {
+    throw new Error("getCollection is not available in this context.");
+  }
+
 	return await getCollection("post", ({ data }) => {
 		return import.meta.env.PROD ? data.draft !== true : true;
 	});
