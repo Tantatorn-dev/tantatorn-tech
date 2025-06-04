@@ -19,7 +19,7 @@
 		"@astrojs/sitemap": "3.4.0",
 		"@astrojs/tailwind": "^6.0.2",
 		"@iconify-json/mdi": "^1.2.3",
-		"@iconify/json": "^2.2.333",
+		"@iconify/json": "^2.2.345",
 		"@types/react": "^19.1.4",
 		"@types/react-dom": "^19.1.5",
 		"astro": "^5.8.1",
