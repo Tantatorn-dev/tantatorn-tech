@@ -11,7 +11,7 @@
 		"check": "astro check"
 	},
 	"dependencies": {
-		"@astrojs/mdx": "4.3.0",
+		"@astrojs/mdx": "4.3.6",
 		"@astrojs/partytown": "^2.1.4",
 		"@astrojs/prefetch": "^0.4.1",
 		"@astrojs/react": "^4.3.0",
