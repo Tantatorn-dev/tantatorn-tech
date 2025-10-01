@@ -26,7 +26,7 @@
 		"astro-icon": "^1.1.5",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
-		"satori": "0.13.1",
+		"satori": "0.18.3",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.34.3",
 		"typed.js": "^2.0.16",
