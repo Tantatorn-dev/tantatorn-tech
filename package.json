@@ -29,7 +29,7 @@
 		"satori": "0.13.1",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.34.5",
-		"typed.js": "^2.0.16",
+		"typed.js": "^3.0.0",
 		"wordcut": "^0.9.1"
 	},
 	"devDependencies": {
