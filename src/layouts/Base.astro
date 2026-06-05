@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 import type { SiteMeta } from "@/types";
 import BaseHead from "@/components/BaseHead";
@@ -27,7 +27,7 @@ const {
 			This is set to false by default in src/site.config.ts
 			*/
 		}
-		{siteConfig.includeViewTransitions && <ViewTransitions fallback="none" />}
+		{siteConfig.includeViewTransitions && <ClientRouter fallback="none" />}
 
 		<!-- Google tag (gtag.js) -->
 		<script
