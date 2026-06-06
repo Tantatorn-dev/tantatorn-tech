@@ -1,14 +1,13 @@
-import type {APIContext, GetStaticPaths} from "astro";
-import {getEntryBySlug} from "astro:content";
-import satori, {type SatoriOptions} from "satori";
-import {html} from "satori-html";
-import {Resvg} from "@resvg/resvg-js";
-import {siteConfig} from "@/site-config";
-import {getAllPosts, getFormattedDate} from "@/utils";
+import type { APIContext, GetStaticPaths } from "astro";
+import satori, { type SatoriOptions } from "satori";
+import { html } from "satori-html";
+import { Resvg } from "@resvg/resvg-js";
+import { siteConfig } from "@/site-config";
+import { getAllPosts, getFormattedDate, getPostSlug } from "@/utils";
 
 import Kanit from "@/assets/Kanit-Regular.ttf";
 import KanitBold from "@/assets/Kanit-Bold.ttf";
-import type {ReactNode} from "react";
+import type { ReactNode } from "react";
 
 const ogOptions: SatoriOptions = {
 	width: 1200,
@@ -51,14 +50,8 @@ const markup = (title: string, pubDate: string) =>
 	</div>`;
 
 export async function GET({ params: { slug } }: APIContext) {
-	const post = (await getEntryBySlug("post" as never, slug!)) as unknown as {
-    data: {
-      title?: string;
-      publishDate?: string | Date;
-      updatedDate?: string | Date;
-      ogImage?: string;
-    };
-  }
+	const posts = await getAllPosts();
+	const post = posts.find((entry) => getPostSlug(entry) === slug);
 	const title = post?.data.title ?? siteConfig.title;
 	const postDate = getFormattedDate(
 		post?.data.updatedDate ?? post?.data.publishDate ?? Date.now(),
@@ -79,5 +72,7 @@ export async function GET({ params: { slug } }: APIContext) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const posts = await getAllPosts();
-	return posts.filter(({ data }) => !data.ogImage).map(({ slug }) => ({ params: { slug } }));
+	return posts
+		.filter(({ data }) => !data.ogImage)
+		.map((post) => ({ params: { slug: getPostSlug(post) } }));
 };

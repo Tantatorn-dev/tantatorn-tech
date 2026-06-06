@@ -1,10 +1,11 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { render, type CollectionEntry } from "astro:content";
 
 import BaseLayout from "./Base.astro";
 import BlogHero from "@/components/blog/Hero";
 import TOC from "@/components/blog/TOC";
 import WebMentions from "@/components/blog/webmentions/index";
+import { getPostSlug } from "@/utils";
 
 interface Props {
 	post: CollectionEntry<"post">;
@@ -13,11 +14,11 @@ interface Props {
 const { post } = Astro.props;
 const {
 	data: { title, description, ogImage, publishDate, updatedDate },
-	slug,
 } = post;
+const slug = getPostSlug(post);
 const socialImage = ogImage ?? `/og-image/${slug}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
-const { headings } = await post.render();
+const { headings } = await render(post);
 ---
 
 <script>

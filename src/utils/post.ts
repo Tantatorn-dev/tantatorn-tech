@@ -1,21 +1,25 @@
-import type {CollectionEntry} from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 let getCollection: typeof import("astro:content").getCollection | undefined;
 
 if (import.meta.env.SSR) {
-  const astroContent = await import("astro:content");
-  getCollection = astroContent.getCollection;
+	const astroContent = await import("astro:content");
+	getCollection = astroContent.getCollection;
 }
 
 /** Note: this function filters out draft posts based on the environment */
 export async function getAllPosts() {
-  if (!getCollection) {
-    throw new Error("getCollection is not available in this context.");
-  }
+	if (!getCollection) {
+		throw new Error("getCollection is not available in this context.");
+	}
 
 	return await getCollection("post", ({ data }) => {
 		return import.meta.env.PROD ? data.draft !== true : true;
 	});
+}
+
+export function getPostSlug(post: Pick<CollectionEntry<"post">, "id">) {
+	return post.id.replace(/\/index$/, "");
 }
 
 export function sortMDByDate(posts: Array<CollectionEntry<"post">>) {
