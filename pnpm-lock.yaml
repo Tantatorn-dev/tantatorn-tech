@@ -19,7 +19,7 @@ importers:
         version: 0.4.1
       '@astrojs/react':
         specifier: ^5.0.7
-        version: 5.0.7(@types/node@24.13.0)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(jiti@1.21.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(yaml@2.8.3)
+        version: 5.0.7(@types/node@24.13.0)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(jiti@1.21.7)(react-dom@19.2.7(react@19.2.8))(react@19.2.8)(yaml@2.8.3)
       '@astrojs/rss':
         specifier: ^4.0.19
         version: 4.0.19
@@ -48,11 +48,11 @@ importers:
         specifier: ^1.1.5
         version: 1.1.5
       react:
-        specifier: ^19.2.7
-        version: 19.2.7
+        specifier: ^19.2.8
+        version: 19.2.8
       react-dom:
         specifier: ^19.2.7
-        version: 19.2.7(react@19.2.7)
+        version: 19.2.7(react@19.2.8)
       satori:
         specifier: 0.26.0
         version: 0.26.0
@@ -3629,8 +3629,8 @@ packages:
     resolution: {integrity: sha512-QgT5//D3jfjJb6Gsjxv0Slpj23ip+HtOpnNgnb2S5zU3CB26G/IDPGoy4RJB42wzFE46DRsstbW6tKHoKbhAxw==}
     engines: {node: '>=0.10.0'}
 
-  react@19.2.7:
-    resolution: {integrity: sha512-HNe9WslTbXmFK8o8cmwgAeJFSBvt1bPdHCVKtaaV+WlAN36mpT4hcRpwbf3fY56ar2oIXzsBpOAiIRHAdY0OlQ==}
+  react@19.2.8:
+    resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
     engines: {node: '>=0.10.0'}
 
   read-cache@1.0.0:
@@ -4676,15 +4676,15 @@ snapshots:
     dependencies:
       prismjs: 1.30.0
 
-  '@astrojs/react@5.0.7(@types/node@24.13.0)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(jiti@1.21.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(yaml@2.8.3)':
+  '@astrojs/react@5.0.7(@types/node@24.13.0)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(jiti@1.21.7)(react-dom@19.2.7(react@19.2.8))(react@19.2.8)(yaml@2.8.3)':
     dependencies:
       '@astrojs/internal-helpers': 0.10.0
       '@types/react': 19.2.17
       '@types/react-dom': 19.2.3(@types/react@19.2.17)
       '@vitejs/plugin-react': 5.2.0(vite@7.3.5(@types/node@24.13.0)(jiti@1.21.7)(yaml@2.8.3))
       devalue: 5.8.1
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
+      react: 19.2.8
+      react-dom: 19.2.7(react@19.2.8)
       ultrahtml: 1.6.0
       vite: 7.3.5(@types/node@24.13.0)(jiti@1.21.7)(yaml@2.8.3)
     transitivePeerDependencies:
@@ -8450,14 +8450,14 @@ snapshots:
       bytes: 1.0.0
       string_decoder: 0.10.31
 
-  react-dom@19.2.7(react@19.2.7):
+  react-dom@19.2.7(react@19.2.8):
     dependencies:
-      react: 19.2.7
+      react: 19.2.8
       scheduler: 0.27.0
 
   react-refresh@0.18.0: {}
 
-  react@19.2.7: {}
+  react@19.2.8: {}
 
   read-cache@1.0.0:
     dependencies:
