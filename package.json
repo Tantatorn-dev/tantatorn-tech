@@ -54,7 +54,7 @@
 		"pagefind": "^1.5.2",
 		"postcss": "^8.5.28",
 		"postcss-html": "^2.0.0",
-		"postcss-import": "^15.1.0",
+		"postcss-import": "^17.0.0",
 		"prettier": "^3.9.9",
 		"prettier-plugin-astro": "1.1.0",
 		"prettier-plugin-tailwindcss": "^0.8.1",
