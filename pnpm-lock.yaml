@@ -33,8 +33,8 @@ importers:
         specifier: ^1.2.3
         version: 1.2.3
       '@iconify/json':
-        specifier: ^2.2.534
-        version: 2.2.534
+        specifier: ^2.2.550
+        version: 2.2.550
       '@types/react':
         specifier: ^19.2.17
         version: 19.2.17
@@ -747,8 +747,8 @@ packages:
   '@iconify-json/mdi@1.2.3':
     resolution: {integrity: sha512-O3cLwbDOK7NNDf2ihaQOH5F9JglnulNDFV7WprU2dSoZu3h3cWH//h74uQAB87brHmvFVxIOkuBX2sZSzYhScg==}
 
-  '@iconify/json@2.2.534':
-    resolution: {integrity: sha512-Des3a8sfIHXnKEsj43K0uSR4ibWtKVsuDumFQq6G/GpEMA449PdZn+fk2mC7nDcIax8MwkAQndAM19uX/xG0xg==}
+  '@iconify/json@2.2.550':
+    resolution: {integrity: sha512-7X+90mjpbgvCRRkOOrwV88L8CfqTUye5SZZXhAa/+131BYN2MYkPNZgNHz2MuaD7h2d2QPruu7HmwuN9v3IfIA==}
 
   '@iconify/tools@5.0.14':
     resolution: {integrity: sha512-wJ4ZE3/HZh2iBqLwG+8FOMHe7CMJAJqwSXZSpPwMdj1gZM3Z4t2hbQMVw4Vm45oQ985qn0g89PUIcDEdKTheBA==}
@@ -4898,7 +4898,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify/json@2.2.534':
+  '@iconify/json@2.2.550':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 2.0.3
